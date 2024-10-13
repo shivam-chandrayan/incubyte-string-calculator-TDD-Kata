@@ -1,4 +1,4 @@
-import { add } from "../src/calculator";
+import { add, NegativeNumberError } from "../src/calculator";
 
 const runTests = (testCases: [string, number | NegativeNumberError][]) => {
   it.each(testCases)(

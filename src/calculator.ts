@@ -1,3 +1,10 @@
+export class NegativeNumberError extends Error {
+  constructor(negativeNumbers: number[]) {
+    super(`Negative numbers not allowed: ${negativeNumbers.join(", ")}`);
+    this.name = "NegativeNumberError";
+  }
+}
+
 function splitNumbers(expression: string): string[] {
   if (expression.startsWith("//")) {
     const parts = expression.split("\n");
@@ -10,10 +17,21 @@ function splitNumbers(expression: string): string[] {
 }
 
 function sumNumbers(numbers: string[]): number {
-  return numbers
-    .map((piece) => parseInt(piece))
+  const negativeNumbers: number[] = [];
+  const sum = numbers
+    .map((piece) => {
+      const num = parseInt(piece);
+      if (num < 0) negativeNumbers.push(num);
+      return num;
+    })
     .filter((num) => !isNaN(num))
-    .reduce((sum, num) => sum + num, 0);
+    .reduce((acc, num) => acc + num, 0);
+
+  if (negativeNumbers.length > 0) {
+    throw new NegativeNumberError(negativeNumbers);
+  }
+
+  return sum;
 }
 
 export function add(expression: string): number {
