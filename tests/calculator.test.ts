@@ -1,17 +1,17 @@
 import { add, NegativeNumberError } from "../src/calculator";
 
 const runTests = (testCases: [string, number | NegativeNumberError][]) => {
-  it.each(testCases)(
-    'should evaluate expression "%s" to be %s',
-    (expression: string, result: number | NegativeNumberError) => {
+  testCases.forEach(([expression, result]) => {
+    const escapedExpression = expression.replace(/\n/g, "\\n");
+    it(`should evaluate expression "${escapedExpression}" to be ${result}`, () => {
       if (result instanceof NegativeNumberError) {
         expect(() => add(expression)).toThrow(NegativeNumberError);
         expect(() => add(expression)).toThrow(result.message);
       } else {
         expect(add(expression)).toBe(result);
       }
-    }
-  );
+    });
+  });
 };
 
 describe("Calculator", () => {
