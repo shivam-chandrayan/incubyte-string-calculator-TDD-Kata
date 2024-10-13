@@ -68,4 +68,13 @@ describe("Calculator", () => {
 
     runTests(negativeTests);
   });
+
+  describe("Skip Numbers bigger than 1000", () => {
+    const basicTests: [string, number][] = [
+      ["2,1001", 2],
+      ["2\n1000", 1002],
+    ];
+
+    runTests(basicTests);
+  });
 });
