@@ -45,4 +45,10 @@ describe("Calculator", () => {
 
     runTests(basicTests);
   });
+
+  describe("Custom Delimiter", () => {
+    const basicTests: [string, number][] = [["//;\n1;2", 13]];
+
+    runTests(basicTests);
+  });
 });
