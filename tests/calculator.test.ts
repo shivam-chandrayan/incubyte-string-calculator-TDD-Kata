@@ -1,3 +1,5 @@
+import { add } from "../src/calculator";
+
 // Helper function to run the tests
 const runTests = (testCases: [string, number][]) => {
   it.each(testCases)(
