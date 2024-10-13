@@ -1,5 +1,5 @@
 export function add(expression: string): number {
-  const pieces: string[] = expression.split(",");
+  const pieces: string[] = expression.split(/,|\n/g);
   const result = pieces
     .map((piece) => parseInt(piece))
     .filter((num) => !isNaN(num))
