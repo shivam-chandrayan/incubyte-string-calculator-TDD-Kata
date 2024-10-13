@@ -1,13 +1,17 @@
 import { add } from "../src/calculator";
 
-// Helper function to run the tests
-const runTests = (testCases: [string, number][]) => {
-  testCases.forEach(([expression, result]) => {
-    const escapedExpression = expression.replace(/\n/g, "\\n");
-    it(`should evaluate expression "${escapedExpression}" to be ${result}`, () => {
-      expect(add(expression)).toBe(result);
-    });
-  });
+const runTests = (testCases: [string, number | NegativeNumberError][]) => {
+  it.each(testCases)(
+    'should evaluate expression "%s" to be %s',
+    (expression: string, result: number | NegativeNumberError) => {
+      if (result instanceof NegativeNumberError) {
+        expect(() => add(expression)).toThrow(NegativeNumberError);
+        expect(() => add(expression)).toThrow(result.message);
+      } else {
+        expect(add(expression)).toBe(result);
+      }
+    }
+  );
 };
 
 describe("Calculator", () => {
@@ -50,5 +54,18 @@ describe("Calculator", () => {
     const basicTests: [string, number][] = [["//;\n1;2", 3]];
 
     runTests(basicTests);
+  });
+
+  describe("Negative Numbers", () => {
+    const negativeTests: [string, NegativeNumberError][] = [
+      ["-1,2,3", new NegativeNumberError([-1])],
+      ["1,-2,3", new NegativeNumberError([-2])],
+      ["-1,-2", new NegativeNumberError([-1, -2])],
+      ["1,2,-3,4", new NegativeNumberError([-3])],
+      ["//;\n1;2;-3", new NegativeNumberError([-3])],
+      ["//;\n-1;2", new NegativeNumberError([-1])],
+    ];
+
+    runTests(negativeTests);
   });
 });
