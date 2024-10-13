@@ -21,7 +21,10 @@ describe("Calculator", () => {
   });
 
   describe("Comma Delimiter", () => {
-    const basicTests: [string, number][] = [["1,5", 6]];
+    const basicTests: [string, number][] = [
+      ["1,5", 6],
+      ["1,2,3", 6],
+    ];
 
     runTests(basicTests);
   });
