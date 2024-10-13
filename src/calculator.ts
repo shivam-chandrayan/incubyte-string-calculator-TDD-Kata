@@ -10,7 +10,11 @@ function splitNumbers(expression: string): string[] {
     const parts = expression.split("\n");
     const delimiter = parts[0].slice(2);
     const numbers = parts[1];
-    return numbers.split(delimiter);
+    const delimiterRegex = new RegExp(
+      delimiter.replace(/[-\/\\^$.*+?()[\]{}|]/g, "\\$&"),
+      "g"
+    );
+    return numbers.split(delimiterRegex);
   }
 
   return expression.split(/,|\n/g);
