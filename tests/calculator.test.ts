@@ -12,7 +12,10 @@ const runTests = (testCases: [string, number][]) => {
 
 describe("Calculator", () => {
   describe("Basic Operations", () => {
-    const basicTests: [string, number][] = [["", 0]];
+    const basicTests: [string, number][] = [
+      ["", 0],
+      ["24", 24],
+    ];
 
     runTests(basicTests);
   });
