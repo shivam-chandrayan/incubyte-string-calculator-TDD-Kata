@@ -77,4 +77,10 @@ describe("Calculator", () => {
 
     runTests(basicTests);
   });
+
+  describe("Longer Delimiters", () => {
+    const basicTests: [string, number][] = [["//[***]\n1***2***3", 6]];
+
+    runTests(basicTests);
+  });
 });
