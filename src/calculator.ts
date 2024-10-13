@@ -24,7 +24,7 @@ function sumNumbers(numbers: string[]): number {
       if (num < 0) negativeNumbers.push(num);
       return num;
     })
-    .filter((num) => !isNaN(num))
+    .filter((num) => !isNaN(num) && num <= 1000)
     .reduce((acc, num) => acc + num, 0);
 
   if (negativeNumbers.length > 0) {
