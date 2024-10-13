@@ -24,6 +24,8 @@ describe("Calculator", () => {
     const basicTests: [string, number][] = [
       ["1,5", 6],
       ["1,2,3", 6],
+      ["1,2,3,4,5", 15],
+      ["99,98,97,96,95,94,93,92,91,90", 945],
     ];
 
     runTests(basicTests);
