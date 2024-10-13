@@ -47,7 +47,7 @@ describe("Calculator", () => {
   });
 
   describe("Custom Delimiter", () => {
-    const basicTests: [string, number][] = [["//;\n1;2", 13]];
+    const basicTests: [string, number][] = [["//;\n1;2", 3]];
 
     runTests(basicTests);
   });
