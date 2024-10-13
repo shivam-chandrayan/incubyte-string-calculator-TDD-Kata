@@ -2,12 +2,12 @@ import { add } from "../src/calculator";
 
 // Helper function to run the tests
 const runTests = (testCases: [string, number][]) => {
-  it.each(testCases)(
-    'should evaluate expression "%s" to be %d',
-    (expression: string, result: number) => {
+  testCases.forEach(([expression, result]) => {
+    const escapedExpression = expression.replace(/\n/g, "\\n");
+    it(`should evaluate expression "${escapedExpression}" to be ${result}`, () => {
       expect(add(expression)).toBe(result);
-    }
-  );
+    });
+  });
 };
 
 describe("Calculator", () => {
@@ -32,7 +32,10 @@ describe("Calculator", () => {
   });
 
   describe("Newline Delimiter", () => {
-    const basicTests: [string, number][] = [["1\n5", 6]];
+    const basicTests: [string, number][] = [
+      ["1\n5", 6],
+      ["1\n2\n3\n4\n5", 15],
+    ];
 
     runTests(basicTests);
   });
