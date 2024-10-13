@@ -39,4 +39,10 @@ describe("Calculator", () => {
 
     runTests(basicTests);
   });
+
+  describe("Mixed Delimiter", () => {
+    const basicTests: [string, number][] = [["1\n2,3,4\n5", 15]];
+
+    runTests(basicTests);
+  });
 });
