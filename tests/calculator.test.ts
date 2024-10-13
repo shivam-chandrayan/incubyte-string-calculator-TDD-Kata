@@ -30,4 +30,10 @@ describe("Calculator", () => {
 
     runTests(basicTests);
   });
+
+  describe("Newline Delimiter", () => {
+    const basicTests: [string, number][] = [["1\n5", 6]];
+
+    runTests(basicTests);
+  });
 });
