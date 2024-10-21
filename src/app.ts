@@ -1,5 +1,6 @@
 import { add } from "./calculator";
 import { createCalculatorHTML } from "./templates/calculator";
+import "./styles.css";
 
 const renderCalculator = () => {
   const root = document.getElementById("root") as HTMLDivElement;
