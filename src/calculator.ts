@@ -5,7 +5,17 @@ export class NegativeNumberError extends Error {
   }
 }
 
-function splitNumbers(expression: string): string[] {
+interface splittedNumbers {
+  numbers: string[];
+  shouldMultiply: boolean;
+}
+
+function splitNumbers(expression: string): splittedNumbers {
+  let res: splittedNumbers = {
+    numbers: [],
+    shouldMultiply: false,
+  };
+
   if (expression.startsWith("//")) {
     const parts = expression.split("\n");
     const delimiter = parts[0].slice(2);
@@ -14,22 +24,34 @@ function splitNumbers(expression: string): string[] {
       delimiter.replace(/[-\/\\^$.*+?()[\]{}|]/g, "\\$&"),
       "g"
     );
-    return numbers.split(delimiterRegex);
+    if (delimiter === "*") {
+      res.shouldMultiply = true;
+    }
+    res.numbers = numbers.split(delimiterRegex);
+    console.log(res);
+    return res;
   }
-
-  return expression.split(/,|\n/g);
+  res.numbers = expression.split(/,|\n/g);
+  return res;
 }
 
-function sumNumbers(numbers: string[]): number {
+function calculate(pieces: splittedNumbers): number {
   const negativeNumbers: number[] = [];
-  const sum = numbers
+
+  const initialValue = pieces.shouldMultiply ? 1 : 0;
+
+  const reduceOperation = (acc: number, num: number): number => {
+    return pieces.shouldMultiply ? acc * num : acc + num;
+  };
+
+  const sum = pieces.numbers
     .map((piece) => {
       const num = parseInt(piece);
       if (num < 0) negativeNumbers.push(num);
       return num;
     })
     .filter((num) => !isNaN(num) && num <= 1000)
-    .reduce((acc, num) => acc + num, 0);
+    .reduce(reduceOperation, initialValue);
 
   if (negativeNumbers.length > 0) {
     throw new NegativeNumberError(negativeNumbers);
@@ -40,5 +62,5 @@ function sumNumbers(numbers: string[]): number {
 
 export function add(expression: string): number {
   const pieces = splitNumbers(expression);
-  return sumNumbers(pieces);
+  return calculate(pieces);
 }
