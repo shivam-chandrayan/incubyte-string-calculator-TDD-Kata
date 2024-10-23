@@ -90,4 +90,9 @@ describe("Calculator", () => {
 
     runTests(basicTests);
   });
+
+  describe("* delimiters", () => {
+    const tests: [string, number][] = [["//*\n2*3", 6]];
+    runTests(tests);
+  });
 });
